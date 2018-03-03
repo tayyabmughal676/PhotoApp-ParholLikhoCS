@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context="com.example.mrtayyab.photoapp.UserProfileActivity">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/userImageView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_above="@+id/userProfileName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="59dp"
+        android:src="@drawable/image" />
+
+
+
+
+
+    <EditText
+        android:id="@+id/userProfileName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:hint="User Name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/userProfileStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userProfileName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Status"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/userProfileBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userProfileStatus"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:backgroundTint="@android:color/white"
+        android:padding="18dp"
+        android:text="Update"
+        android:textAllCaps="false"
+        android:textColor="@color/colorMy"
+        android:textSize="18sp" />
+
+</RelativeLayout>

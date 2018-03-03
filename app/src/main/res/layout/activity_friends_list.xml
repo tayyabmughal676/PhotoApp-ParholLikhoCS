@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.mrtayyab.photoapp.FriendsListActivity">
+
+
+    <include
+        android:id="@+id/userToolbar"
+        layout="@layout/main_toolbar" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/userToolbar"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="22dp"
+        android:text="Search Friends"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/friendNameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:ems="10"
+        android:hint="Enter Friend name "
+        android:inputType="textPersonName" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/friendListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/friendNameText" />
+
+</RelativeLayout>

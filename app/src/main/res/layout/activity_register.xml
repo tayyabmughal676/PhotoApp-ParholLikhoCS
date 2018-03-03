@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context="com.example.mrtayyab.photoapp.RegisterActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="92dp"
+        app:srcCompat="@drawable/logo" />
+
+    <EditText
+        android:id="@+id/regUserNAme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView2"
+        android:layout_marginTop="31dp"
+        android:ems="10"
+        android:hint="User Name "
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/regEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/regUserNAme"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/regPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/regEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPersonName|textPassword" />
+
+    <Button
+        android:id="@+id/regBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/regPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
+        android:backgroundTint="@android:color/white"
+        android:padding="18dp"
+        android:text="Register User"
+        android:textAllCaps="false"
+        android:textColor="@color/colorMy"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/regLoginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/regBtn"
+        android:layout_centerHorizontal="true"
+        android:text="Already have a Account ?"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+</RelativeLayout>

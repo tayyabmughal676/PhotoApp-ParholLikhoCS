@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context="com.example.mrtayyab.photoapp.LoginActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="89dp"
+        app:srcCompat="@drawable/logo" />
+
+    <EditText
+        android:id="@+id/loginEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="41dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="false"
+        android:singleLine="false"
+        android:textColor="@android:color/white" />
+
+    <EditText
+        android:id="@+id/loginPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/loginEmail"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPersonName|textPassword"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/forgetBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@android:color/white"
+        android:padding="18dp"
+        android:text="Login"
+        android:textAllCaps="false"
+        android:textColor="@color/colorMy"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/loginForgetPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/forgetBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
+        android:text="Forgetton Password"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/loginCreateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginForgetPass"
+        android:layout_centerHorizontal="true"
+        android:text="Need a new Account?"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+</RelativeLayout>
