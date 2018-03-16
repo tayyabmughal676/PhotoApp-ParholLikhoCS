@@ -4,15 +4,18 @@ import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
    lateinit var mAuth : FirebaseAuth
     lateinit var mToolbar : Toolbar
+    lateinit var mFloatBtn : FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -20,9 +23,16 @@ class MainActivity : AppCompatActivity() {
        mAuth = FirebaseAuth.getInstance()
 
         mToolbar = findViewById(R.id.mainToolbar)
+        mFloatBtn = findViewById(R.id.floatingActionButton)
+
       setSupportActionBar(mToolbar)
         supportActionBar!!.setTitle("Photo App")
         mToolbar.setTitleTextColor(Color.WHITE)
+
+
+        mFloatBtn.setOnClickListener {
+            Toast.makeText(applicationContext, "Hello world " , Toast.LENGTH_LONG).show()
+        }
 
 
     }
