@@ -1,96 +1,98 @@
 package com.example.mrtayyab.photoapp
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.Toolbar
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import pub.devrel.easypermissions.EasyPermissions
-import android.support.annotation.NonNull
-import pub.devrel.easypermissions.AppSettingsDialog
-import android.Manifest.permission.READ_CONTACTS
-import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.app.Activity
-import android.graphics.Bitmap
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
-import com.squareup.picasso.Callback
-import com.squareup.picasso.NetworkPolicy
+import com.googlecode.mp4parser.authoring.Edit
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import id.zelory.compressor.Compressor
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 import java.io.ByteArrayOutputStream
 import java.io.File
 
+class PostActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks {
 
-@Suppress("UNNECESSARY_SAFE_CALL")
-class UserProfileActivity : AppCompatActivity() ,EasyPermissions.PermissionCallbacks
-{
-//
-    lateinit var mUserName : EditText
-    lateinit var mUserStatus : EditText
-    lateinit var mUpdateBtn : Button
-    lateinit var mUserImage : ImageView
+    lateinit var mToolbar : Toolbar
+    lateinit var mPostImage : ImageView
+    lateinit var mPostText : EditText
+    lateinit var mPostButton : Button
+
+    // Firebase
     lateinit var mDatabase : DatabaseReference
     lateinit var mAuth : FirebaseAuth
     lateinit var mProgressbar : ProgressDialog
-
+    // Firebase  Gallery Pick
     private val GALLERY_PICK = 1
+    /// Firebase Image Storage
     lateinit var mImageStorage : StorageReference
-
-
-
+    // For User Permission on Run Time
     private val LOCATION_AND_CONTACTS = arrayOf<String>(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.READ_EXTERNAL_STORAGE ,android.Manifest.permission.CAMERA)
     private val RC_CAMERA_PERM = 123
     private val RC_LOCATION_CONTACTS_PERM = 124
 
 
-    override fun onCreate(savedInstanceState: Bundle?)  {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_profile)
+        setContentView(R.layout.activity_post)
 
-        mUserName = findViewById(R.id.userProfileName)
-        mUserImage = findViewById(R.id.userImageView)
-        mUserStatus  = findViewById(R.id.userProfileStatus)
-        mUpdateBtn = findViewById(R.id.userProfileBtn)
+        // Tool bar
+        mToolbar = findViewById(R.id.postToolbar)
+        setSupportActionBar(mToolbar)
+        supportActionBar!!.setTitle("Post")
+        mToolbar.setTitleTextColor(Color.WHITE)
+        // Post item
+        mPostImage = findViewById(R.id.postImageView)
+        mPostText = findViewById(R.id.postText)
+        mPostButton = findViewById(R.id.postBtn)
+        // ProgressBar
         mProgressbar = ProgressDialog(this)
 
-
+        // Firebase
         mAuth = FirebaseAuth.getInstance()
+        //Firebase current user ID
         val uid  = mAuth.currentUser?.uid
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("Users").child(uid)
+        mDatabase = FirebaseDatabase.getInstance().getReference("Posts").child(uid)
         mImageStorage = FirebaseStorage.getInstance().getReference()
 
-     // here we recivce data from Firebase  database
 
-        mDatabase.addValueEventListener(object : ValueEventListener{
+
+        // here we recivce data from Firebase  database
+
+        mDatabase.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {
             }
 
             override fun onDataChange(data: DataSnapshot?) {
 
-                val name = data?.child("name")?.value!!.toString().trim()
-                val status = data?.child("status")?.value!!.toString().trim()
-                val image = data?.child("image")?.value!!.toString().trim()
+                val name = data?.child("post")?.value!!.toString().trim()
+//                val status = data?.child("status")?.value!!.toString().trim()
+                val image = data.child("image")?.value!!.toString().trim()
 
-                mUserName.setText(name)
-                mUserStatus.setText(status)
+                mPostText.setText(name)
 
-                Picasso.with(applicationContext).load(image).placeholder(R.drawable.image).into(mUserImage)
+                Picasso.with(applicationContext).load(image).placeholder(R.drawable.image).into(mPostImage)
 
                 if(!image.equals("default")){
-                    Picasso.with(applicationContext).load(image).placeholder(R.drawable.image).into(mUserImage)
+                    Picasso.with(applicationContext).load(image).placeholder(R.drawable.image).into(mPostImage)
 
                 }
             }
@@ -98,35 +100,15 @@ class UserProfileActivity : AppCompatActivity() ,EasyPermissions.PermissionCallb
         } )
 
 
-        mUpdateBtn.setOnClickListener {
-
-            val name = mUserName.text.toString().trim()
-            val status = mUserStatus.text.toString().trim()
-
-            if(TextUtils.isEmpty(name)){
-                mUserName.error = " Enter name"
-                return@setOnClickListener
-            }
-            if(TextUtils.isEmpty(status)){
-                mUserName.error = " Enter Status"
-                return@setOnClickListener
-            }
-
-            updateUser(name , status)
-        }
-
-
-
-        mUserImage.setOnClickListener {
-            Toast.makeText(applicationContext , "Touched " , Toast.LENGTH_LONG).show()
-
+        mPostImage.setOnClickListener {
+            Toast.makeText(applicationContext, "Select Image" , Toast.LENGTH_LONG).show()
             if (hasLocationAndContactsPermissions()) {
                 // Have permissions, do the thing!
 //                Toast.makeText(this, "TODO: Location and Contacts things", Toast.LENGTH_LONG).show();
                 val galleryIntent = Intent()
-            galleryIntent.type = "image/*"
-            galleryIntent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(galleryIntent, "SELECT IMAGE"), GALLERY_PICK)
+                galleryIntent.type = "image/*"
+                galleryIntent.action = Intent.ACTION_GET_CONTENT
+                startActivityForResult(Intent.createChooser(galleryIntent, "SELECT IMAGE"), GALLERY_PICK)
             } else {
                 // Ask for both permissions
                 EasyPermissions.requestPermissions(
@@ -139,28 +121,42 @@ class UserProfileActivity : AppCompatActivity() ,EasyPermissions.PermissionCallb
         }
 
 
-    }
+        /// Post Button
+        mPostButton.setOnClickListener {
+            Toast.makeText(applicationContext, "Hello Button" , Toast.LENGTH_LONG).show()
 
-    private fun updateUser(name: String, status: String) {
-        mProgressbar.setMessage("Updating  wait..")
+            /// Here get Text for editText
+            val post = mPostText.text.toString().trim()
+            if(TextUtils.isEmpty(post)){
+                mPostText.error = " Enter Something ..."
+                return@setOnClickListener
+            }
+            // Post data function for upload data
+            postData(post)
+        }
+
+
+    }
+    // Post data function for upload data
+    private fun postData(post: String) {
+        mProgressbar.setMessage("Posting  Wait..")
         mProgressbar.show()
-
-        val userMap = HashMap<String ,Any>()
-        userMap["name"] = name
-        userMap["status"] = status
-
-      mDatabase.updateChildren(userMap).addOnCompleteListener { task ->
-          if(task.isSuccessful){
-              val intent = Intent(applicationContext , MainActivity::class.java)
-              startActivity(intent)
-              intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-
-              finish()
-          }
-
-      }
+        val postMap = HashMap<String ,Any>()
+        postMap["post"] = post
+        postMap["status"] = "Write Something about post "
+        mDatabase.updateChildren(postMap).addOnCompleteListener { task ->
+            if(task.isSuccessful){
+                // Back to mainActivity
+                val intent = Intent(applicationContext , MainActivity::class.java)
+                startActivity(intent)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                finish()
+            }
+        }
     }
 
+
+    // On Result Activity
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -171,7 +167,9 @@ class UserProfileActivity : AppCompatActivity() ,EasyPermissions.PermissionCallb
 
             CropImage.activity(imageUri)
                     .setAspectRatio(1, 1)
-                    .setMinCropWindowSize(500, 500)
+//                    .setMinCropWindowSize(500, 500)
+                    .setMinCropWindowSize(700, 500)
+
                     .start(this)
 
         }
@@ -210,8 +208,8 @@ class UserProfileActivity : AppCompatActivity() ,EasyPermissions.PermissionCallb
                 mAuth = FirebaseAuth.getInstance()
                 val uid = mAuth.currentUser?.uid
 
-                val filepath = mImageStorage.child("profile_images").child(uid + ".jpg")
-                val thumb_filepath = mImageStorage.child("profile_images").child("Thumbs").child(uid + ".jpg")
+                val filepath = mImageStorage.child("Post_images").child(uid + ".jpg")
+                val thumb_filepath = mImageStorage.child("Post_images").child("Thumbs").child(uid + ".jpg")
 
                 //
                 //
@@ -266,8 +264,7 @@ class UserProfileActivity : AppCompatActivity() ,EasyPermissions.PermissionCallb
     }
 
 
-
-
+    /////----------------------------- Permission Functions  -----------------
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
 
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
@@ -293,4 +290,7 @@ class UserProfileActivity : AppCompatActivity() ,EasyPermissions.PermissionCallb
     private fun hasLocationAndContactsPermissions(): Boolean {
         return EasyPermissions.hasPermissions(this, *LOCATION_AND_CONTACTS )
     }
+
+    //////////--------------------- Permission Functions -------------- //////////
+
 }

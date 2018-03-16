@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         mCreateUser = findViewById(R.id.loginCreateBtn)
-        mLoginBtn = findViewById(R.id.forgetBtn)
+        mLoginBtn = findViewById(R.id.postBtn)
         mLoginEmail = findViewById(R.id.loginEmail)
         mLoginPass = findViewById(R.id.loginPassword)
         mForgetPass = findViewById(R.id.loginForgetPass)

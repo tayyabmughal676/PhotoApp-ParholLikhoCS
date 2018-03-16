@@ -29,10 +29,10 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".ForgetPassActivity" />
-
-        <activity android:name=".FriendsListActivity"
-            android:parentActivityName=".MainActivity"></activity>
-
+        <activity
+            android:name=".FriendsListActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".PostActivity"></activity>
     </application>
 
 </manifest>

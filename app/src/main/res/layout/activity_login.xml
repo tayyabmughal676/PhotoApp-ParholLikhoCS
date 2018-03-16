@@ -41,7 +41,7 @@
         android:textColor="@android:color/white" />
 
     <Button
-        android:id="@+id/forgetBtn"
+        android:id="@+id/postBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/loginPassword"
@@ -58,7 +58,7 @@
         android:id="@+id/loginForgetPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/forgetBtn"
+        android:layout_below="@+id/postBtn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="11dp"
         android:text="Forgetton Password"

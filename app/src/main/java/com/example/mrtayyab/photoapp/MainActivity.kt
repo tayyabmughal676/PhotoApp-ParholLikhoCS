@@ -31,7 +31,9 @@ class MainActivity : AppCompatActivity() {
 
 
         mFloatBtn.setOnClickListener {
-            Toast.makeText(applicationContext, "Hello world " , Toast.LENGTH_LONG).show()
+//            Toast.makeText(applicationContext, "Hello world " , Toast.LENGTH_LONG).show()
+            val postIntet = Intent(applicationContext , PostActivity::class.java)
+            startActivity(postIntet)
         }
 
 

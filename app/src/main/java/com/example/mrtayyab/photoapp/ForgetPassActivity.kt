@@ -23,7 +23,7 @@ class ForgetPassActivity : AppCompatActivity() {
 
 
         mEmail = findViewById(R.id.fotgetEmail)
-        mForgetBtn = findViewById(R.id.forgetBtn)
+        mForgetBtn = findViewById(R.id.postBtn)
 
         mAuth = FirebaseAuth.getInstance()
 
