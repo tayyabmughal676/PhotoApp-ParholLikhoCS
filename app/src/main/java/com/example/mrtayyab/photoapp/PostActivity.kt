@@ -43,6 +43,7 @@ class PostActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks {
     /// Firebase Image Storage
     lateinit var mImageStorage : StorageReference
     // For User Permission on Run Time
+
     private val LOCATION_AND_CONTACTS = arrayOf<String>(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.READ_EXTERNAL_STORAGE ,android.Manifest.permission.CAMERA)
     private val RC_CAMERA_PERM = 123
@@ -89,7 +90,7 @@ class PostActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks {
 
                 mPostText.setText(name)
 
-                Picasso.with(applicationContext).load(image).placeholder(R.drawable.image).into(mPostImage)
+//                Picasso.with(applicationContext).load(image).placeholder(R.drawable.image).into(mPostImage)
 
                 if(!image.equals("default")){
                     Picasso.with(applicationContext).load(image).placeholder(R.drawable.image).into(mPostImage)
@@ -123,7 +124,7 @@ class PostActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks {
 
         /// Post Button
         mPostButton.setOnClickListener {
-            Toast.makeText(applicationContext, "Hello Button" , Toast.LENGTH_LONG).show()
+//            Toast.makeText(applicationContext, "Hello Button" , Toast.LENGTH_LONG).show()
 
             /// Here get Text for editText
             val post = mPostText.text.toString().trim()
@@ -168,7 +169,7 @@ class PostActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks {
             CropImage.activity(imageUri)
                     .setAspectRatio(1, 1)
 //                    .setMinCropWindowSize(500, 500)
-                    .setMinCropWindowSize(700, 500)
+                    .setMinCropWindowSize(700, 500) // change Width 500 to 700
 
                     .start(this)
 

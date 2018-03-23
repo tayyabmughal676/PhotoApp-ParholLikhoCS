@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
    lateinit var mAuth : FirebaseAuth
     lateinit var mToolbar : Toolbar
     lateinit var mFloatBtn : FloatingActionButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
        mAuth = FirebaseAuth.getInstance()
 
         mToolbar = findViewById(R.id.mainToolbar)
+
         mFloatBtn = findViewById(R.id.floatingActionButton)
 
       setSupportActionBar(mToolbar)
